@@ -6,7 +6,6 @@ Analyser les données des passagers et construire un modèle
 de machine learning capable de prédire la probabilité de survie d'un passager
 
 # Outils utilisés: 
-- Python
 - Pandas
 - Matplotlib / Seaborn
 - Scikit-learn
