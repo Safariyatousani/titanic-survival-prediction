@@ -1,78 +1,96 @@
-# titanic-survival-prediction
-ML PROJET : Prédiction de survie des passagers du Titanic
+# Prédiction de Survie - Titanic | Python · Scikit-learn · ML
 
-# Objectif du projet :
-L'objectif de ce projet est de construire un modèle de Machine Learning capable de prédire la probabilité de survie des passager du Titanic à partir de leurs caractéristiques (classe, sexe, âge...).
-Ce projet s'inscrut dans une démarche d'apprentissage personnelle en Data Science avec un focus sur:
-- le nettoyage de données,
-- l'analyse exploratoire,
-- la modélisation,
-- l'interprétation des résultats.
+##  Contexte
+Le naufrage du Titanic en 1912 est l'une des catastrophes maritimes 
+les plus connues. Ce projet utilise les données des 891 passagers 
+pour construire un modèle de classification capable de prédire 
+la probabilité de survie.
 
-# Dataset
-Le dataset provient de la compétition Kaggle Titanic. Il contient des informations démographiques et sociales sur les passagers.
-Variables principales utilisées :
-- Sex
-- Pclass
-- Age
-- SibSp
-- Parch
-- Fare
-- Embarked
+##  Objectif
+Identifier les facteurs déterminants de survie et construire 
+un modèle prédictif performant en suivant une démarche 
+progressive et rigoureuse.
 
-# Outils utilisés: 
-- Pandas
-- Numpy
-- Matplotlib / Seaborn
-- Scikit-learn
+## Stack technique
+- **Python** : Pandas, NumPy, Matplotlib, Seaborn
+- **Scikit-learn** : Régression Logistique, Random Forest, GridSearchCV
+- **GitHub** : Documentation et versioning
 
-# Etapes de la réalisation du projet
-Analyse Exploratoire
-- Exploration des distributions
-- Identifications des valeurs manquantes
-- Analyse des corrélations
-- Visualisations des variables clés
+## Démarche
 
-Préparation des données
-- Gestion des valeurs manquantes
-- Encodage des varaibles catégorielles
-- Sélection des varaibles pertinentes
+### 1. Exploration des données (EDA)
+- 891 passagers, 12 variables
+- Valeurs manquantes identifiées : Age (177), Cabin (687), Embarked (2)
+- Taux de survie global : 38%
 
-Modélisation
-- Séparation des données (train/ test split)
-- Implémentation d'une Régression Logistique
-- Entrainement du modèle
+### 2. Visualisations clés
+- Distribution des survivants par sexe → les femmes survivent 3x plus
+- Taux de survie par classe → Classe 1 : 63% vs Classe 3 : 24%
+- Matrice de corrélation → Sex et Pclass sont les variables les plus corrélées
 
-Evaluation
-- Mesure de l'accuracy
-- Analyse des prédictions
-- Interprétation des variables influentes
+### 3. Feature Engineering
+Création de 3 nouvelles variables :
 
-# Résultats
-Le modèle final atteint  75 % de précision sur les données du test.
-Les valeurs les plus influentes semblent être :
-- Le sexe du passager
-- La classe
-- L'âge
+| Feature | Description |
+|---|---|
+| `Title` | Titre extrait du nom (Mr, Mrs, Miss, Master, Officer, Rare) |
+| `FamilySize` | SibSp + Parch + 1 |
+| `IsAlone` | 1 si le passager voyage seul |
 
-# Limites et axes d'amélioration
-Limites :
-- Dataset de taille limitée
-- Modèle simple sans optimisation des hyperparamètres
-- Absence de validation croisée
+### 4. Modélisation progressive
 
-Améliorations possibles
-- Tester d'autres modèles
-- Optimisation des paramètres
-- Feature engineering plus avancé
+| Modèle | Accuracy |
+|---|---|
+| Régression Logistique | 80.4% |
+| Random Forest de base | 80.0% |
+| Random Forest + GridSearchCV | 82.1% |
+| **Random Forest + Feature Engineering** | **82.7%**  |
 
-# Conclusion
-Ce projet m'a permis de consolider mes compétences en :
-- Data cleaning
-- Analyse exploratoire
-- Machine Learning supervisé
-- Interprétation des résultats
-Il constitue une première étape vers des projets plus avancés en Data science.
+### 5. Meilleurs hyperparamètres (GridSearchCV)
+```python
+{
+  'max_depth': 10,
+  'min_samples_split': 10,
+  'n_estimators': 300
+}
+```
 
-# Autrice 
-Safariyatou Sani
+## Résultats clés
+
+### Importance des features
+Le **titre du passager** (variable créée) est la feature 
+la plus prédictive avec 25% d'importance devant le 
+prix du billet (21%) et le sexe (20%).
+
+### Matrice de confusion finale
+|  | Prédit Décédé | Prédit Survivant |
+|---|---|---|
+| **Réel Décédé** | 93 | 12 |
+| **Réel Survivant** | 19 | 55 |
+
+## Insights principaux
+- Le sexe et le statut socio-économique sont les facteurs 
+  les plus déterminants de survie
+- Le feature engineering améliore l'accuracy de +2.3%
+- Le titre extrait du nom encode à la fois le genre et 
+  le statut social variable très puissante
+
+## Pistes d'amélioration
+- Tester XGBoost ou LightGBM
+- Explorer le deck de la cabine comme feature
+- Appliquer une validation croisée plus robuste (StratifiedKFold)
+
+## Structure du projet
+```
+projet-titanic/
+├── notebooks/
+│   └── titanic.ipynb
+├── data/
+│   └── raw/
+│       └── titanic.csv
+└── README.md
+```
+
+## 🔗 Liens
+- [LinkedIn](https://www.linkedin.com/in/safariyatouss)
+- [GitHub](https://github.com/Safariyatousani)
